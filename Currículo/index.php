@@ -101,7 +101,7 @@ $experiences =[
         <h1><?php echo $name ?></h1>
         <p><?php echo "$adress[street] - $adress[number] - $adress[neighborhood]"?></p>
         <p>GitHub : <?php  echo $contacts->github?></p>
-        <p>Telefone: (123) 456-7890</p>
+        <p>Linkedin: <?php echo $contacts->linkedin?></p>
 
     </header>
 

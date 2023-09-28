@@ -10,7 +10,7 @@ if($method === 'GET'){
 echo  json_encode(['message' => 'Recebi um GET']) ;
 }
 
-if($method === 'POST'){ 
+else if($method === 'POST'){ 
 
     echo  json_encode(['message' => 'Recebi um POST']) ;
     }

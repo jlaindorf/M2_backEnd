@@ -26,21 +26,30 @@ if ($method === 'POST') {
         exit;
 
     };
+    if ($idade < 18) {
+        http_response_code(403);
+     echo json_encode(['error' => 'Não é permitido empréstimo para menor de idade']);
+     exit; // nao continuar o código
+    }
 
-    $taxa = TAXA / 100;
+
+
+    $taxa = $idade < 25 ? 0.01 : TAXA / 100;
     $juros = $valor * $taxa * $prazo; //juros 
 
     $montante = $valor + $juros;
 
     $parcela = $montante / $prazo;
-
-    echo json_encode(['juros' => $juros,
-                     'montante' => $montante,
+    if(file_exists("$nome.txt")){
+        http_response_code(409);
+        echo json_encode(['error' => 'Já existe um Empréstimo em seu nome']);
+        exit;
+    }
+    file_put_contents("$nome.txt","Nome: $nome \nIdade: $idade\nCurso: $curso\nValor: $valor\nPrazo Para Pagar: $prazo\n");
+    http_response_code(201);
+    echo json_encode(['juros' => number_format($juros,2),
+                     'montante' => number_format($montante,2),
                      'parcela' =>number_format($parcela, 2)
 
                 ]);
-}
-
-
-
-?>
+            }

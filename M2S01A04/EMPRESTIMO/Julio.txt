@@ -1,0 +1,5 @@
+Nome: Julio 
+Idade: 32
+Curso: ADS
+Valor: 1000
+Prazo Para Pagar: 12

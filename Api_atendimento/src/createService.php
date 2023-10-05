@@ -1,32 +1,33 @@
 <?php
-require_once'config.php';
-require_once'utils.php';
+require_once 'config.php';
+require_once 'utils.php';
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'POST') {
-
     $body = getBody();
-    
-    $guiche = filter_var($body->guiche , FILTER_VALIDATE_INT );
-   
-    
+
+    $guiche = filter_var($body->guiche, FILTER_VALIDATE_INT);
+
     if (!$guiche) {
-        http_response_code(400);
-        echo json_encode(['error'=>'Não foi enviado o número do Guichê']);
+        echo json_encode(['error' => 'Não foi enviado o Nº do guiche']);
+    }
+
+    $fila = readFileContent(ARQUIVO_FILA_ATENDIMENTO);
+
+    // exclui a pessoa do array de fila
+    if(count($fila) === 0) {
+        http_response_code(204);
         exit;
     }
 
-    $fila =  readFileContent(ARQUIVO_FILA_ATENDIMENTO);
+    $primeiroItem =  array_shift($fila);
 
-    
-    // exclui a pessoa do array de fila
-    $primeiroItem = array_shift($fila);
-    file_put_contents(ARQUIVO_FILA_ATENDIMENTO, json_encode($fila));
-       saveFileContent(ARQUIVO_FILA_ATENDIMENTO, $fila);
-    // identifico qual é o guichê
+    saveFileContent(ARQUIVO_FILA_ATENDIMENTO, $fila);
+   
+    // identifico qual é guiche
     //fazer um push do item retirado do array fila
 
-    
     if ($guiche === 1) {
         $listaGuiche1 = readFileContent(GUICHE_1);
         array_push($listaGuiche1, $primeiroItem);
@@ -41,9 +42,6 @@ if ($method === 'POST') {
         saveFileContent(GUICHE_3, $listaGuiche3);
     }
 
-        http_response_code(201);
-        echo json_encode(['message' => 'Atendimento Criado com Sucesso!']);
-    
-
-
+    http_response_code(201);
+    echo json_encode(['current' => $primeiroItem ]);
 }

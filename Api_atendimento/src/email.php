@@ -17,14 +17,28 @@
         $phpmailer->addAddress($destinatario, $nomeDestinatario);
         $phpmailer->Subject = $subject;
         $phpmailer->isHTML(true);
-        $phpmailer->Body = 'teste conteudo email .............';
-
+        $phpmailer->Body ='
+        <html>
+            <head>
+                <meta charset="UTF-8">
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f0f0f0;
+                    }
+                    .container {
+                        background-color: #ffffff;
+                        padding: 20px;
+                        border-radius: 5px;
+                        box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
 
       /*  if ($phpmailer->send()) {
             echo "Email enviado com sucesso!";
         } else {
             echo "Erro ao enviar o email: " . $phpmailer->ErrorInfo;
         }*/
+        </style>
+        </html>';
      $phpmailer->send();
     }
 ?>5

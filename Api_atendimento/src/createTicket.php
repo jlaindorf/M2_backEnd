@@ -1,6 +1,7 @@
 <?php
 require_once'config.php';
 require_once'utils.php';
+require_once'email.php';
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'POST') {
@@ -27,10 +28,12 @@ if ($method === 'POST') {
     var_dump($filaAtendimento) ;
 
     http_response_code(201);
+   
+    sendEmail('emai@gmail.com', $name, 'TICKET CRIADO');
     echo json_encode([
         'message' =>'Aguarde Sua Vez'
-    ]);
 
-     
+       
+    ]);
    }
 ?>

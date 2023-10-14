@@ -31,20 +31,16 @@ if ($method === 'POST') {
 
     debug($funcionario1) ;
 
-   // echo $funcionario1->getCpf();
+   echo $funcionario1->getCpf();
 
 
 $empresa = new Empresa('Hai Toyota', '05.481.897.0001/40');
 
 $empresa->contratar($funcionario1);
 $empresa->contratar($funcionario2);
+echo $funcionario1->getId();
+echo $funcionario2->getId();
 
+$empresa->demitir($funcionario1->getId());
 
-debug($empresa->listarFuncionarios())
-
-
-
-
-
-
-?>
+debug($empresa->listarFuncionarios());

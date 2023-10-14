@@ -16,6 +16,7 @@ require_once 'Funcionario.php';
         public function contratar(Funcionario $funcionario){
           
             $data=[
+                'id'=> $funcionario->getId(),
                 'nome' => $funcionario->getNome(),
                 'idade' => $funcionario->getIdade(),
                 'cpf' => $funcionario->getCpf(),
@@ -28,8 +29,14 @@ require_once 'Funcionario.php';
        
         }
 
-        public function demitir($id){
+        public function demitir(string $id){
 
+            $allData = readFileContent('files/funcionarios.txt');
+          
+        $filteredData =  array_values(array_filter($allData, function ($item) use ($id) {
+            return $item->id !== $id;
+        }));
+            saveFileContent('files/funcionarios.txt',$filteredData);
         }
 
         public function listarFuncionarios(){

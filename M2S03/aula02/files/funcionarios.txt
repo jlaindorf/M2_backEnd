@@ -1,0 +1,1 @@
+[{"nome":"Jo\u00e3o Frango","idade":null,"cpf":"045.022.780-30","salario":3000},{"nome":"Julio","idade":null,"cpf":"055.022.780-30","salario":4000},{"nome":"Jo\u00e3o Frango","idade":null,"cpf":"045.022.780-30","salario":3000},{"nome":"Julio","idade":null,"cpf":"055.022.780-30","salario":4000}]

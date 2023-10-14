@@ -5,9 +5,14 @@
     
 class Pessoa
 {
-    public $nome;
-    public $idade;
-    public $cpf;
+    private $nome;
+    private $idade;
+    private $cpf;
+
+   public function __construct($nome, $cpf) {
+    $this->nome = $nome;
+    $this->cpf = $cpf;
+   }
 
     public function getNome(){
         return $this->nome;

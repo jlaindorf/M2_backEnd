@@ -26,3 +26,10 @@ function saveFileContent($fileName, $content) {
     echo json_encode($data);
     exit;
 }
+
+function debug($content){
+   // echo '<pre>';
+    echo var_dump($content) ;
+  //  echo '</pre>';
+
+}

@@ -12,7 +12,14 @@ require_once '../models/Race.php';
 
 
         $race= new Race($name);
-        $race->insert();
+        $result = $race->insert();
+
+        
+        if($result['success'] === true) {
+              response(["message" => "Cadastrado com sucesso"], 201);
+          } else {
+              responseError("Não foi possível realizar o cadastro", 400);
+          }
  }
 
 

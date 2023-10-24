@@ -12,6 +12,7 @@ require_once '../models/Race.php';
 
 
         $race= new Race($name);
+        $race->insert();
  }
 
 

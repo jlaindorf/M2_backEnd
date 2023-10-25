@@ -48,4 +48,23 @@ class PetController{
         $pets = $pet->findMany();
         response($pets, 200);
     }
+
+
+    public function listOne(){
+        $id = sanitizeInput($_GET, 'id', FILTER_VALIDATE_INT, false);
+        if(!$id) responseError('O ID é inválido',400);
+
+        $pet = new Pet();
+        $result = $pet->findOne($id);
+
+        if(!$result) responseError('Não foi encontrado Pet com esse ID ', 404);
+
+        response ($result, 200);
+    }
+
+    public function deleteOne(){
+
+        $id = sanitizeInput($_GET, 'id', FILTER_VALIDATE_INT, false);
+        
+    }
 }

@@ -7,14 +7,14 @@ $controller = new PetController();
 
 if ($method === 'POST') {
     $controller->createOne();
-}
-if ($method === 'POST') {
-    $controller->createOne();
 } else if ($method === 'GET' && !isset($_GET['id'])) {
     $controller->listAll();
 } else if($method === 'GET' && $_GET['id']) {
     $controller->listOne();
 }
-if ($method === 'DELETE') {
+else if ($method === 'DELETE') {
     $controller->deleteOne();
+}
+else if ($method === 'PUT') {
+    $controller->updateOne();
 }

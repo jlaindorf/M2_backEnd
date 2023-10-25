@@ -62,9 +62,38 @@ class PetController{
         response ($result, 200);
     }
 
-    public function deleteOne(){
-
+    public function deleteOne()
+    {
         $id = sanitizeInput($_GET, 'id', FILTER_VALIDATE_INT, false);
-        
+
+        if (!$id) responseError('O id é inválido', 400);
+
+        $pet = new Pet();
+
+        $petExists = $pet->findOne($id);
+
+        if (!$petExists) responseError('Não foi encontrado um pet com esse id', 404);
+
+        $result = $pet->deleteOne($id);
+
+        if ($result['success'] === true) {
+            response([], 204);
+        } else {
+            responseError('Não foi possível deletar o item', 400);
+        }
+    }
+
+
+    public function updateOne(){
+        $id = sanitizeInput($_GET, 'id', FILTER_VALIDATE_INT, false);
+        $body = getBody();
+
+        if (!$id) responseError('O id esta ausente', 400);
+
+        if(isset($body->name))  {
+            $name = sanitizeInput($body, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
+
+            
+        }
     }
 }

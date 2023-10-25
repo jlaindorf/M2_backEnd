@@ -21,7 +21,11 @@ require_once '../models/Race.php';
               responseError("Não foi possível realizar o cadastro", 400);
           }
  }
-
+       public function listAll(){
+              $races = new Race();
+              $races = $races->findMany();
+              response($races, 200);
+       }
 
  }
 

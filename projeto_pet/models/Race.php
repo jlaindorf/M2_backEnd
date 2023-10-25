@@ -6,7 +6,7 @@ private $id;
 private $name;
 private $created_at;
 
-public function __construct($name) {
+public function __construct($name = null) {
     $this->name = $name;
 }
 
@@ -24,9 +24,20 @@ public function insert(){
         debug($error->getMessage());
         return ['success' => false];
     }
-
   
  }
+ public function findMany(){
+    //  SELECT * from races
+    $connection = new PDO("pgsql:host=localhost;dbname=api_pets", "docker", "docker");
+    $sql = "SELECT * from races";
+    $statement = $connection->prepare($sql);
+    $statement->execute();
+
+    return $statement->fetchAll(PDO::FETCH_ASSOC) ;
+
+
+ }
+
 public function getId()
 {
 return $this->id;

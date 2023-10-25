@@ -10,15 +10,29 @@ class PetController{
        $age = sanitizeInput($body, 'age', FILTER_VALIDATE_INT);
        $race_id= sanitizeInput($body, 'race_id', FILTER_VALIDATE_INT);
        $weight = sanitizeInput($body, 'weight', FILTER_VALIDATE_FLOAT);
-       $size = sanitizeInput($body, 'size',  FILTER_SANITIZE_SPECIAL_CHARS);
+       $size = strtolower(sanitizeInput($body,  'size', FILTER_SANITIZE_SPECIAL_CHARS));
 
        if(!$name) responseError("Nome do Pet é obrigatório",400);
        if(!$race_id) responseError("ID da raça do Pet é obrigatória",400);
     
-       //falta validar size........
+       
+       if (
+        $size &&
+        !($size === 'pequeno' ||
+            $size === 'medio' ||
+            $size === 'grande' ||
+            $size === 'gigante')
+    ) {
+        responseError("O tamanho é inválido", 400);
+    }
+    
        $pet = new Pet($name, $race_id);
  
        if($age) $pet->setAge($age);
+       if ($weight) $pet->setWeight($weight);
+       if ($size) $pet->setSize($size);
+
+
        $result= $pet->insert();
          
        if($result['success'] === true) {
@@ -30,8 +44,8 @@ class PetController{
     }
 
     public function listAll(){
-        $pets = new Pet();
-        $pets = $pets->findMany();
+        $pet = new Pet();
+        $pets = $pet->findMany();
         response($pets, 200);
     }
 }

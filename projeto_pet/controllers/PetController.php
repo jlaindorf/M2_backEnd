@@ -1,6 +1,7 @@
 <?php
 require_once '../utils.php';
 require_once '../models/Pet.php';
+require_once '../models/PetDAO.php';
 class PetController{
 
     public function createOne(){
@@ -31,9 +32,9 @@ class PetController{
        if($age) $pet->setAge($age);
        if ($weight) $pet->setWeight($weight);
        if ($size) $pet->setSize($size);
+        $petDAO = new PetDAO();
 
-
-       $result= $pet->insert();
+       $result= $petDAO->insert($pet);
          
        if($result['success'] === true) {
         response(["message" => "Cadastrado com sucesso"], 201);

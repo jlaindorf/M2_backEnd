@@ -83,17 +83,43 @@ class PetController{
         }
     }
 
+    
+        public function updateOne(){
+            $id = sanitizeInput($_GET, 'id', FILTER_VALIDATE_INT, false);
+            $body = getBody();
+                    
+            if (!$id) responseError('O id esta ausente', 400);
+    
+            if(isset($body->name) && empty($body->name)) {
+                responseError('O nome não pode ser vazio', 400);
+            }
+    
+            if(isset($body->race_id) && empty($body->race_id)) {
+                responseError('a raça não pode ser vazia', 400);
+            }
+    
+            if (
+                isset($body->size) &&
+                !($body->size === 'pequeno' ||
+                    $body->size === 'medio' ||
+                    $body->size === 'grande' ||
+                    $body->size === 'gigante')
+            ) {
+                responseError("O tamanho é inválido", 400);
+            }
+    
+    
+            $pet = new Pet();
 
-    public function updateOne(){
-        $id = sanitizeInput($_GET, 'id', FILTER_VALIDATE_INT, false);
-        $body = getBody();
-
-        if (!$id) responseError('O id esta ausente', 400);
-
-        if(isset($body->name))  {
-            $name = sanitizeInput($body, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
-
-            
+            $result = $pet->updateOne($id, $body);
+    
+          
+        if ($result['success'] === true) {
+            response(["message" => "Atualizado com sucesso"], 201);
+            } else {
+                responseError('Não foi possível atualizar o item', 400);
+            }
+    
         }
-    }
-}
+        }
+    

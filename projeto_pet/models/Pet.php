@@ -107,6 +107,72 @@ class Pet
                 return ['success' => false];
             }
         }
+        public function updateOne($id, $data)
+        {
+            $petInDatabase = $this->findOne($id);
+    
+            $sql = "update pets 
+                            set 
+                            name=:name_value,
+                            race_id=:race_id_value,
+                            size=:size_value,
+                            weight=:weight_value,
+                            age=:age_value
+                    where id = :id_value
+                ";
+    
+            $statement = ($this->getConnection())->prepare($sql);
+    
+            $statement->bindValue(":id_value", $id);
+    
+            $statement->bindValue(
+                ":name_value",
+                isset($data->name) ?
+                    $data->name :
+                    $petInDatabase['name']
+            );
+    
+            $statement->bindValue(
+                ":race_id_value",
+                isset($data->race_id) ?
+                    $data->race_id :
+                    $petInDatabase['race_id']
+            );
+    
+            $statement->bindValue(
+                ":size_value",
+                isset($data->size) ?
+                    $data->size :
+                    $petInDatabase['size']
+            );
+    
+            $statement->bindValue(
+                ":weight_value",
+                isset($data->weight)
+                    ? $data->weight :
+                    $petInDatabase['weight']
+            );
+    
+            $statement->bindValue(
+                ":age_value",
+                isset($data->age) ?
+                    $data->age :
+                    $petInDatabase['age']
+            );
+            $statement->execute();
+
+            return ['success' => true];
+        }
+    
+        public function dashboard(){
+            $sql = "select size, count(size) from pets
+            group by size
+            order by count(size) DESC";
+    
+            $statement = ($this->getConnection())->prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
     
     function getId()
     {

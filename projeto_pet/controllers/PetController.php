@@ -1,6 +1,5 @@
 <?php
 require_once '../utils.php';
-require_once '../models/Pet.php';
 require_once '../models/PetDAO.php';
 class PetController{
 
@@ -45,8 +44,8 @@ class PetController{
     }
 
     public function listAll(){
-        $pet = new Pet();
-        $pets = $pet->findMany();
+        $petDAO = new PetDAO();
+        $pets = $petDAO->findMany();
         response($pets, 200);
     }
 
@@ -55,8 +54,8 @@ class PetController{
         $id = sanitizeInput($_GET, 'id', FILTER_VALIDATE_INT, false);
         if(!$id) responseError('O ID é inválido',400);
 
-        $pet = new Pet();
-        $result = $pet->findOne($id);
+        $petDao = new PetDAO();
+        $result = $petDao->findOne($id);
 
         if(!$result) responseError('Não foi encontrado Pet com esse ID ', 404);
 
@@ -69,13 +68,13 @@ class PetController{
 
         if (!$id) responseError('O id é inválido', 400);
 
-        $pet = new Pet();
+        $petDAO = new PetDAO();
 
-        $petExists = $pet->findOne($id);
+        $petExists = $petDAO->findOne($id);
 
         if (!$petExists) responseError('Não foi encontrado um pet com esse id', 404);
 
-        $result = $pet->deleteOne($id);
+        $result = $petDAO->deleteOne($id);
 
         if ($result['success'] === true) {
             response([], 204);
@@ -83,6 +82,7 @@ class PetController{
             responseError('Não foi possível deletar o item', 400);
         }
     }
+
 
     
         public function updateOne(){
@@ -110,9 +110,9 @@ class PetController{
             }
     
     
-            $pet = new Pet();
+            $petDao = new PetDAO();
 
-            $result = $pet->updateOne($id, $body);
+            $result = $petDao->updateOne($id, $body);
     
           
         if ($result['success'] === true) {

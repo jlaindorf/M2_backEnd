@@ -82,21 +82,21 @@ class PetDAO
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function deleteOne($id){
+    public function deleteOne($id)
+    {
         try {
             $sql = "delete from pets where id = :id_value";
-    
+
             $statement = ($this->getConnection())->prepare($sql);
             $statement->bindValue(":id_value", $id);
             $statement->execute();
-    
+
             return ['success' => true];
-    
-            } catch (PDOException $error) {
-                debug($error->getMessage());
-                return ['success' => false];
-            }
+        } catch (PDOException $error) {
+            debug($error->getMessage());
+            return ['success' => false];
         }
+    }
         public function updateOne($id, $data)
         {
             $petInDatabase = $this->findOne($id);

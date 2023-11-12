@@ -1,0 +1,234 @@
+CREATE TABLE "races" (
+  "id" serial PRIMARY KEY,
+  "name" varchar(50) UNIQUE NOT NULL,
+  "created_at" timestamp with time zone default now()
+);
+CREATE TYPE "sizes_pets" AS ENUM (
+  'pequeno',
+  'medio',
+  'grande',
+  'gigante'
+);
+CREATE TABLE "pets" (
+  "id" serial PRIMARY KEY,
+  "race_id" integer NOT NULL,
+  "name" varchar(150) NOT NULL,
+  "age" integer,
+  "weight" float,
+  "size" sizes_pets,
+  "created_at" timestamp DEFAULT (now())
+);
+
+
+ALTER TABLE "pets" ADD FOREIGN KEY ("race_id") REFERENCES "races" ("id");
+
+
+select
+                    pets.id,
+                    pets.name,
+                    size,
+                    races.name as nome_raca
+                        from pets
+                            join races on pets.race_id = races.id
+                            order by size DESC      
+                            
+                            
+                            
+ select p.name, p.size, r.name as name_pet from pets as p
+ join races as r 
+ on r.id = p.race_id
+                            
+                       RETORNAR CONTAGEM DE PETS por tamanho
+                       
+                       select size, count(size) from pets 
+                       group by size 
+                       order by count(size) desc
+                       
+                            
+             
+                            
+
+
+                              CREATE TABLE "places" (
+  id serial PRIMARY KEY,
+  name varchar(150) NOT NULL,
+  contact varchar(32),
+  opening_hours varchar(120),
+  description text,
+  latitude float UNIQUE NOT NULL,
+ float UNIQUE NOT NULL,
+  created_at timestamp with time zone DEFAULT now()
+)
+  
+  CREATE TABLE "reviews" (
+  id serial PRIMARY KEY,
+  place_id integer,
+  name text NOT NULL,
+  email varchar(150),
+  stars decimal(2,1),
+  date timestamp,
+  status status not null default'PENDENTE',
+  created_at timestamp with time zone DEFAULT now(),
+  foreign KEY  ("place_id") REFERENCES "places" (id)
+);
+
+insert into places 
+(name,
+ contact ,
+ opening_hours,
+ description,
+ latitude,
+ longitude)
+values 
+('TESTE',
+'48-98998999',
+'19:00-02:00',
+'o melhor sushi da região',
+-27.6037252,
+48.6281258);
+
+select * from places
+
+select * from PLACES where id = 1;
+
+delete * from places where id = 1;
+
+
+update places 
+              set description  = 'Mudei Agora',
+                 opening_hours = 'Fechado para sempre'
+           where id = 1
+
+
+insert into reviews
+	(
+		place_id,
+		name,
+		email,
+		stars
+	)
+	values
+	(	
+		1,
+		'Lugar aconchegante',
+		'julio@hotmail.com',
+		'5'	
+		
+	);
+
+	
+	select p.id as id_places,
+		   p.name as nome_lugar
+	from reviews r
+	join places p on p.id  = r.place_id
+
+
+       
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*create type options_plans AS enum('BRONZE','PRATA','OURO');
+create table users (
+	id serial primary key,
+	name varchar(200) not null,
+	email varchar(200) not null unique,
+	type_plan options_plans not null,
+	is_verify boolean not null default false,
+	bio text,
+	followers integer not null default 0,
+	date_birth date,
+	created_at timestamp with time zone default now()
+);*/
+
+/*alter table users add column points integer ;  uma coluna
+
+alter table users  (MAIS DE UMA COLUNA DE UMA VEZ
+add column TESTE2 INTEGER default 0,
+add column TESTE3 INTEGER default 0;*/
+
+/*drop table users  - apaga tabela
+*/
+/*
+insert into users
+(
+	name,
+	email,
+	type_plan,
+	bio,
+	date_birth
+
+)
+values
+(
+	'adriana', 'adriana@gmail.com','OURO','Mana do Julio', '1985-07-13'
+
+
+);*/
+/*
+update users 
+	set 
+	type_plan  = 'OURO',
+	is_verify  = true 
+	where id = 1
+*/
+/*
+update users
+set
+	type_plan  = 'PRATA'
+	where type_plan ='OURO' and is_verify  = true 
+	
+
+*/
+/*
+INSERT INTO users
+    (name, email, type_plan, bio, date_birth)
+VALUES
+    ('John', 'john@gmail.com', 'OURO', '.........', '1995-08-12'),
+    ('Sarah', 'sarah@gmail.com', 'PRATA', '.........', '2000-11-05'),
+    ('Michael', 'michael@gmail.com', 'BRONZE', '.........', '1987-04-19'),
+    ('Emily', 'emily@gmail.com', 'OURO', '.........', '1992-06-30'),
+    ('Daniel', 'daniel@gmail.com', 'OURO', '.........', '1996-09-14'),
+    ('Jessica', 'jessica@gmail.com', 'BRONZE', '.........', '1998-01-25');
+
+*/
+
+
+select * from users ;
+select id, name , email from users;
+select name from users where is_verify = true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
